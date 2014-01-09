@@ -1,0 +1,95 @@
+-debug
+-target:library
+-nowarn:0169
+-out:Temp/Assembly-CSharp.dll
+-r:"C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll"
+-r:Library/ScriptAssemblies/Assembly-CSharp-firstpass.dll
+-r:Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll
+-r:Assets/Plugins/clipper_library.dll
+-r:Assets/Plugins/GameDraw.dll
+-r:Assets/Plugins/Poly2Tri.dll
+-r:"C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll"
+-define:UNITY_STANDALONE_WIN
+-define:ENABLE_MICROPHONE
+-define:ENABLE_TEXTUREID_MAP
+-define:ENABLE_AUDIO_FMOD
+-define:UNITY_STANDALONE
+-define:ENABLE_MONO
+-define:ENABLE_SPRITES
+-define:ENABLE_TERRAIN
+-define:ENABLE_GENERICS
+-define:ENABLE_SUBSTANCE
+-define:INCLUDE_WP8SUPPORT
+-define:ENABLE_MOVIES
+-define:ENABLE_WWW
+-define:ENABLE_IMAGEEFFECTS
+-define:ENABLE_WEBCAM
+-define:INCLUDE_METROSUPPORT
+-define:RENDER_SOFTWARE_CURSOR
+-define:ENABLE_NETWORK
+-define:ENABLE_PHYSICS
+-define:ENABLE_CACHING
+-define:ENABLE_CLOTH
+-define:ENABLE_2D_PHYSICS
+-define:ENABLE_SHADOWS
+-define:ENABLE_AUDIO
+-define:ENABLE_NAVMESH_CARVING
+-define:ENABLE_DUCK_TYPING
+-define:ENABLE_SINGLE_INSTANCE_BUILD_SETTING
+-define:UNITY_4_3_2
+-define:UNITY_4_3
+-define:ENABLE_PROFILER
+-define:UNITY_EDITOR
+-define:UNITY_EDITOR_WIN
+Assets/Characters/Locomotion/Scripts/Locomotion.cs
+"Assets/Locomotion System/AlignmentTracker.cs"
+"Assets/Locomotion System/GhostOriginal.cs"
+"Assets/Locomotion System/IK1JointAnalytic.cs"
+"Assets/Locomotion System/IKSimple.cs"
+"Assets/Locomotion System/IKSolver.cs"
+"Assets/Locomotion System/IMotionAnalyzer.cs"
+"Assets/Locomotion System/Interpolator.cs"
+"Assets/Locomotion System/LegAnimator.cs"
+"Assets/Locomotion System/LegController.cs"
+"Assets/Locomotion System/MotionAnalyzer.cs"
+"Assets/Locomotion System/MotionAnalyzerBackwards.cs"
+"Assets/Locomotion System/PolarGradientBandInterpolator.cs"
+"Assets/Locomotion System/TrajectoryVisualizer.cs"
+"Assets/Locomotion System/Util.cs"
+"Assets/Materials/Party Pack/Scripts/CandleLight.cs"
+"Assets/Materials/Party Pack/Scripts/CycleCookiesTimer.cs"
+"Assets/Materials/Party Pack/Scripts/Rotate.cs"
+"Assets/Materials/Party Pack/Scripts/TriggerParticlesTimer.cs"
+"Assets/Materials/Party Pack/Scripts/TriggerParticlesTouch.cs"
+"Assets/Materials/Party Pack/Scripts/TriggerSoundTouch.cs"
+Assets/Materials/SimpleParticlePack/Scripts/ParticleTester.cs
+"Assets/Materials/SkyBox Volume 2/Stars01/NewBehaviourScript.cs"
+Assets/Scripts/CharacterControllerLogic.cs
+Assets/Scripts/CharacterState.cs
+Assets/Scripts/DieInThreeSeconds.cs
+Assets/Scripts/Enemy/EnemyAi.cs
+Assets/Scripts/Enemy/EnemyDroneAi.cs
+Assets/Scripts/Enemy/EnemyRobotAi.cs
+Assets/Scripts/Equippables/Equippable.cs
+Assets/Scripts/Equippables/GrenadeLauncher.cs
+Assets/Scripts/Equippables/LaserGun.cs
+Assets/Scripts/FootPlanting.cs
+Assets/Scripts/Grenade.cs
+Assets/Scripts/GrenadeLauncher.cs
+Assets/Scripts/HealthContainer.cs
+Assets/Scripts/HelthPickUp.cs
+Assets/Scripts/InputManager.cs
+Assets/Scripts/PhysicsBullet.cs
+Assets/Scripts/RandomCharacters.cs
+Assets/Scripts/Reticle.cs
+Assets/Scripts/SceneManager.cs
+Assets/Scripts/SceneViewCameraFollower.cs
+Assets/Scripts/SpawnPoint.cs
+Assets/Scripts/Spawner.cs
+Assets/Scripts/TargetMatching.cs
+Assets/Scripts/ThirdPersonCamera.cs
+Assets/Scripts/Weapon.cs
+Assets/Scripts/WeaponHand.cs
+Assets/Scripts/myGUI.cs
+-r:"C:/Program Files (x86)/Unity/Editor/Data/Mono\lib/mono/unity\System.Runtime.Serialization.dll"
+-r:"C:/Program Files (x86)/Unity/Editor/Data/Mono\lib/mono/unity\System.Xml.Linq.dll"
