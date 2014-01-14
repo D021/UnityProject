@@ -19,7 +19,7 @@ public class SpawnPoint : MonoBehaviour {
 		if (spawnTimer > spawnTime)
 		{
 			spawnTimer = 0;
-			Instantiate(Resources.Load("Robot", typeof(GameObject)), this.transform.position, this.transform.rotation);
+			Instantiate(Resources.Load("Enemies/Robot", typeof(GameObject)), this.transform.position, this.transform.rotation);
 		}
 	}
 }

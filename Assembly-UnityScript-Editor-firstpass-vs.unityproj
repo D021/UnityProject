@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{4E7AB006-2200-7FD7-8CC8-4493608BB5CA}</ProjectGuid>
+	<ProjectGuid>{6C1BC198-4B3C-9FED-CDA3-71B380F07B4D}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -55,7 +55,6 @@
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\_BloomAndFlares\AddStuff.shader" />
      <None Include="Assets\Standard Assets\Blob-Shadow\ProjectorAdditive.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\ExtractSkyboxShader.shader" />
-     <None Include="Assets\Plugins\GameDraw\Shaders\HighlightTextured.shader" />
      <None Include="Assets\Shaders\Glass.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\ShowAlphaChannel.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\GlowConeTap.shader" />
@@ -70,9 +69,9 @@
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\_BloomAndFlares\VignetteShader.shader" />
      <None Include="Assets\Shaders\Resources\FastTreeCreatorLeaves.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\PreDepthOfFieldZRead.shader" />
-     <None Include="Assets\Plugins\GameDraw\Shaders\HiglightClip.shader" />
      <None Include="Assets\Shaders\Alpha-Cancel.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\_DepthOfField\CopyDepthToRGBA.shader" />
+     <None Include="Assets\Teleporter\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\GlowCompose.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\DepthRGBA8RadialBlur.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\ContrastComposite.shader" />
@@ -91,7 +90,6 @@
      <None Include="Assets\Shaders\BillboardTree.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\RadialBlurDepth.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\LensFlareComposite.shader" />
-     <None Include="Assets\Plugins\UCLAGameLab\Documentation\versions.txt" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\ConvertDepth.shader" />
      <None Include="Assets\Standard Assets\Blob-Shadow\ProjectorMultiply.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\ColorCorrectionCurvesSimple.shader" />
@@ -99,7 +97,6 @@
      <None Include="Assets\Shaders\MeshTerrain4Splats.shader" />
      <None Include="Assets\Standard Assets\Water\Sources\FX-Water Simple.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\ChromaticAberrationShader.shader" />
-     <None Include="Assets\Plugins\GameDraw\Shaders\GridHighlight.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\ColorCorrectionSelective.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\_BloomAndFlares\SeparableBlurPlus.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\EdgeBlurApply.shader" />
@@ -110,7 +107,6 @@
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\_DepthOfField\SeparableBlur.shader" />
      <None Include="Assets\Characters\Raw Mocap Data\Animations\_CompleteAnimationList.txt" />
      <None Include="Assets\Shaders\Resources\FastTreeCreatorLeavesOptimized.shader" />
-     <None Include="Assets\Plugins\GameDraw\Shaders\HighlightEdge.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\EdgeDetectNormalsHQ.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\_DepthOfField\SeparableRGBADepthBlur.shader" />
      <None Include="Assets\Shaders\Vegetation-TwoPassUnlit.shader" />
@@ -121,10 +117,8 @@
      <None Include="Assets\Materials\prototype_textures\readme.txt" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\_BloomAndFlares\LensFlareCreate.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\EdgeDetectNormals.shader" />
-     <None Include="Assets\Plugins\GameDraw\Shaders\PainterShader.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\BrightPassReplacement.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\ClearExceptSkyboxShader.shader" />
-     <None Include="Assets\Plugins\GameDraw\Shaders\WireFrame.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\LightShafts.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\SimpleClear.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\_DepthOfField\DepthOfField.shader" />
@@ -132,18 +126,13 @@
      <None Include="Assets\Shaders\Particle Multiply.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\DepthDownsample.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\RadialBlurDepthWeighted.shader" />
-     <None Include="Assets\Plugins\GameDraw\Shaders\HighlightPlus.shader" />
      <None Include="Assets\Shaders\alpha_2sided.shader" />
      <None Include="Assets\Characters\Robot War Tank\readme.txt" />
-     <None Include="Assets\Plugins\GameDraw\Shaders\Highlight.shader" />
  <Reference Include="Assembly-UnityScript-firstpass">
  <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
  </Reference>
  <Reference Include="clipper_library">
  <HintPath>Assets\Plugins\clipper_library.dll</HintPath>
- </Reference>
- <Reference Include="GameDraw">
- <HintPath>Assets\Plugins\GameDraw.dll</HintPath>
  </Reference>
  <Reference Include="Poly2Tri">
  <HintPath>Assets\Plugins\Poly2Tri.dll</HintPath>
@@ -175,7 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
-      <Project>{AFFFA578-0823-39EC-ED25-1F3DF91124AA}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
+      <Project>{FDE690F1-626F-FFA0-5754-E83120972A79}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

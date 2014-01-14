@@ -11,12 +11,14 @@ public class Grenade : MonoBehaviour {
 	// This should match the radius debug sphere used with this 
 	[SerializeField] 
 	private float blastRadius = 2.5f;
-	[SerializeField]
-	private float damage = 25f;
+	public float damage = 25f;
 
 	private Transform grenadeLauncherTransform;
 	// The array of object caught in this grenade blast radius once it explodes
 	private	Collider[] hitColliders;
+
+	[SerializeField]
+	private AudioClip explosionClip;
 
 	// Use this for initialization
 	void Start () {
@@ -40,6 +42,7 @@ public class Grenade : MonoBehaviour {
 		// First make sure we have not registered a hit on anything
 		if (!hasHit)
 		{
+			AudioSource.PlayClipAtPoint(explosionClip, this.transform.position);
 			hasHit = true;
 			// Create the explosion effect
 			transform.parent = transform;

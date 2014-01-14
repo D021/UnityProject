@@ -25,7 +25,7 @@ public class SceneManager : MonoBehaviour {
 		{
 			// spawn enemy
 			//"Object1", typeof(GameObject)) as GameObject
-			enemy = Instantiate(Resources.Load("Enemy", typeof(GameObject)),  spawnLocation.position, spawnLocation.rotation) as GameObject;
+			enemy = Instantiate(Resources.Load("Enemies/Enemy", typeof(GameObject)),  spawnLocation.position, spawnLocation.rotation) as GameObject;
 			// enemy = Instantiate(enemy, spawnLocation.position, spawnLocation.rotation) as GameObject; 
 			// reset spawn timer
 			spawnTimer = 0;

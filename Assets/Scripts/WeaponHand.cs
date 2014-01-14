@@ -43,7 +43,6 @@ public class WeaponHand : MonoBehaviour {
 	// *****************************************************
 	// Array of equiptable items such as Gadgets and Weapons
 	// *****************************************************
-	[SerializeField]
 	Equippable currentEquippedWeapon;
 	[SerializeField]
 	private List<Equippable> equips = new List<Equippable>();
@@ -60,8 +59,14 @@ public class WeaponHand : MonoBehaviour {
 	/// 
 	// Use this for initialization
 	void Start () {
-		currentEquippedWeapon = equips[0];
 
+		WeaponManager wm = this.GetComponent<WeaponManager>();
+		Debug.Log("WeaponHand");
+		wm.setUpForPlay();
+		wm.loadUnlockedWeapons(ref equips);
+
+
+		currentEquippedWeapon = equips[0];
 		fired = false;
 
 		player = GameObject.FindWithTag("Player");
@@ -72,16 +77,16 @@ public class WeaponHand : MonoBehaviour {
 		// Draw the initial weapons mat and mes
 		renderer.material = currentEquippedWeapon.getMaterial();
 		this.GetComponent<MeshFilter>().mesh  = currentEquippedWeapon.getMesh();
-		// correctly orient the weapon
 		this.transform.localEulerAngles = currentEquippedWeapon.getRotation();
+		currentEquippedWeapon.setTransform(this.transform);
 		// Load List of available weapons from InventoryManager
+
 		//Debug.Log(reloadTime);
 		// For rigidBody Ammo
 		// Default is grenade launcher, this code will be changed once we have a filesystem or database to load from 
 		reloadTime = currentEquippedWeapon.getReloadTime();
 		currentEquippedWeapon.setReloadTimer(reloadTime+1.0f);
 		reloadTimer = currentEquippedWeapon.getReloadTimer();
-		currentEquippedWeapon.setTransform(this.transform);
 		currentEquippedWeapon.setReloadTime(2.0f);
 		//equips[0].setShotPower(1000);
 		currentEquippedWeapon.setShotOffset(2);
@@ -101,9 +106,13 @@ public class WeaponHand : MonoBehaviour {
 		// If Fire Button / Right Trigger is Down
 		if (Input.GetAxis("Fire") > 0.1f)
 		{	
-			Debug.Log ("FireButtonDown");
+			fired = true;
 			currentEquippedWeapon.fireButtonDown();
-
+		}
+		else if (fired)
+		{
+			fired = false;
+			currentEquippedWeapon.fireButtonReleased();
 		}
 		// if Switch Weapon Button is down / Right Bumper
 		else if (Input.GetButtonDown("RightBumper") )
@@ -138,6 +147,7 @@ public class WeaponHand : MonoBehaviour {
 		// correctly orient the weapon
 		this.transform.localEulerAngles = equips[i].getRotation();
 		currentEquippedWeapon = equips[i];
+		currentEquippedWeapon.setTransform(this.transform);
 	}
 
 	/*****************************************/
