@@ -46,11 +46,11 @@ public class CharacterControllerLogic : MonoBehaviour
 	[SerializeField]
 	private float fovDampTime = 3f;
 	[SerializeField]
-	private float jumpMultiplier = 1f;
+	private float jumpMultiplier = 1.3f;
 	[SerializeField]
 	private CapsuleCollider capCollider;
 	[SerializeField]
-	private float jumpDist = 1f;
+	private float jumpDist = 4f;
 	
 	
 	// Private global only
@@ -129,13 +129,14 @@ public class CharacterControllerLogic : MonoBehaviour
 	/// </summary>
 	void Update() 
 	{
-		if (animator && gamecam.CamState != ThirdPersonCamera.CamStates.FirstPerson)
+		if (animator)
 		{
 			stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 			transInfo = animator.GetAnimatorTransitionInfo(0);
 			
 			// Press A to jump
-			if (Input.GetButton("Jump"))
+			//Debug.Log(Input.GetButton("A"));
+			if (Input.GetButton("A"))
 			{
 				animator.SetBool("Jump", true);
 			}
@@ -156,7 +157,7 @@ public class CharacterControllerLogic : MonoBehaviour
             StickToWorldspace(this.transform, gamecam.transform, ref direction, ref charSpeed, ref charAngle, IsInPivot());		
 			
 			// Press B to sprint
-			if (Input.GetButton("Sprint"))
+			if (Input.GetButton("B"))
 			{
 				speed = Mathf.Lerp(speed, SPRINT_SPEED, Time.deltaTime);
 				gamecam.camera.fieldOfView = Mathf.Lerp(gamecam.camera.fieldOfView, SPRINT_FOV, fovDampTime * Time.deltaTime);

@@ -69,6 +69,7 @@
      <Compile Include="Assets\Materials\Party Pack\Scripts\TriggerSoundTouch.cs" />
      <Compile Include="Assets\Materials\SimpleParticlePack\Scripts\ParticleTester.cs" />
      <Compile Include="Assets\Materials\SkyBox Volume 2\Stars01\NewBehaviourScript.cs" />
+     <Compile Include="Assets\Props\GearProcedural\Gear.cs" />
      <Compile Include="Assets\Scripts\CharacterControllerLogic.cs" />
      <Compile Include="Assets\Scripts\CharacterState.cs" />
      <Compile Include="Assets\Scripts\DieInThreeSeconds.cs" />
@@ -137,6 +138,7 @@
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\_DepthOfField\RecordCenterDepth.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\RecordCenterDepth.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\DepthRecord.shader" />
+     <None Include="Assets\Props\GearProcedural\readme.txt" />
      <None Include="Assets\Shaders\BillboardTree.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\RadialBlurDepth.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\LensFlareComposite.shader" />
@@ -146,6 +148,7 @@
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\CreaseApply.shader" />
      <None Include="Assets\Shaders\MeshTerrain4Splats.shader" />
      <None Include="Assets\Standard Assets\Water\Sources\FX-Water Simple.shader" />
+     <None Include="Assets\Materials\sky5X\README.txt" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\ChromaticAberrationShader.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\ColorCorrectionSelective.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\_BloomAndFlares\SeparableBlurPlus.shader" />
@@ -178,12 +181,6 @@
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\RadialBlurDepthWeighted.shader" />
      <None Include="Assets\Shaders\alpha_2sided.shader" />
      <None Include="Assets\Characters\Robot War Tank\readme.txt" />
- <Reference Include="clipper_library">
- <HintPath>Assets\Plugins\clipper_library.dll</HintPath>
- </Reference>
- <Reference Include="Poly2Tri">
- <HintPath>Assets\Plugins\Poly2Tri.dll</HintPath>
- </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">

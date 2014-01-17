@@ -47,6 +47,13 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Props\Gear_Pack\Gear_Rotation.js" />
+     <Compile Include="Assets\Props\Gears and Pulleys\Scripts\LockPosition.js" />
+     <Compile Include="Assets\Props\Gears and Pulleys\Scripts\OscillateRotation.js" />
+     <Compile Include="Assets\Props\Gears and Pulleys\Scripts\PulleyBelt.js" />
+     <Compile Include="Assets\Props\Gears and Pulleys\Scripts\PulleyController.js" />
+     <Compile Include="Assets\Props\Gears and Pulleys\Scripts\RigidBodyRotate.js" />
+     <Compile Include="Assets\Props\Gears and Pulleys\Scripts\ScrollTexture.js" />
+     <Compile Include="Assets\Props\Gears and Pulleys\Scripts\TwistGear.js" />
      <Compile Include="Assets\Teleporter\Standard Assets\Character Controllers\Sources\Scripts\CharacterMotor.js" />
      <Compile Include="Assets\Teleporter\Standard Assets\Character Controllers\Sources\Scripts\FPSInputController.js" />
      <Compile Include="Assets\Teleporter\Standard Assets\Character Controllers\Sources\Scripts\PlatformInputController.js" />
@@ -89,6 +96,7 @@
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\_DepthOfField\RecordCenterDepth.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\RecordCenterDepth.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\DepthRecord.shader" />
+     <None Include="Assets\Props\GearProcedural\readme.txt" />
      <None Include="Assets\Shaders\BillboardTree.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\RadialBlurDepth.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\LensFlareComposite.shader" />
@@ -98,6 +106,7 @@
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\CreaseApply.shader" />
      <None Include="Assets\Shaders\MeshTerrain4Splats.shader" />
      <None Include="Assets\Standard Assets\Water\Sources\FX-Water Simple.shader" />
+     <None Include="Assets\Materials\sky5X\README.txt" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\ChromaticAberrationShader.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\ColorCorrectionSelective.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\_BloomAndFlares\SeparableBlurPlus.shader" />
@@ -130,12 +139,6 @@
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\RadialBlurDepthWeighted.shader" />
      <None Include="Assets\Shaders\alpha_2sided.shader" />
      <None Include="Assets\Characters\Robot War Tank\readme.txt" />
- <Reference Include="clipper_library">
- <HintPath>Assets\Plugins\clipper_library.dll</HintPath>
- </Reference>
- <Reference Include="Poly2Tri">
- <HintPath>Assets\Plugins\Poly2Tri.dll</HintPath>
- </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">

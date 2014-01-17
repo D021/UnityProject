@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;	// For List<>
 
-public class WeaponShop : MonoBehaviour {
 
+public class WeaponShop : MonoBehaviour {
 	[SerializeField]
 	private TextMesh activationText;
 	private bool inShop = false;
