@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HelthPickUp : MonoBehaviour {
+public class HealthPickUp : MonoBehaviour {
 
 	[SerializeField]
 	private int healthAmount = 50;

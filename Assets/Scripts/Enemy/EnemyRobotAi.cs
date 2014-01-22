@@ -32,6 +32,7 @@ public class EnemyRobotAi : MonoBehaviour {
 
 	private Transform healthTextTransform;
 	private TextMesh healthText;
+	private Vector3 myLookAt;
 	// Use this for initialization
 	void Start () {
 		enemyCharacterController = this.GetComponent<CharacterController>();
@@ -66,7 +67,9 @@ public class EnemyRobotAi : MonoBehaviour {
 			toPlayer = playerTransform.position - this.transform.position;
 			if (detectsPlayer)
 			{
-				this.transform.LookAt(playerTransform);
+				myLookAt = playerTransform.position;
+				myLookAt.y = 0;
+				this.transform.LookAt(myLookAt);
 				// Enemy is engaging the player
 				// Draw a line to player DEBUGGING
 				// Debug.DrawLine(this.transform.position, playerTransform.position);
@@ -91,6 +94,7 @@ public class EnemyRobotAi : MonoBehaviour {
 	private void goToPlayer()
 	{
 		toPlayer = playerTransform.position - this.transform.position;
+		toPlayer.y = 0;
 		enemyCharacterController.Move((toPlayer.normalized) * Time.deltaTime * speed);
 		animator.SetFloat("Speed", 1.0f);
 	}
