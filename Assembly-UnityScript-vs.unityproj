@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Models\Models\Level\bloodGusher.js" />
      <Compile Include="Assets\Props\Gear_Pack\Gear_Rotation.js" />
      <Compile Include="Assets\Props\Gears and Pulleys\Scripts\LockPosition.js" />
      <Compile Include="Assets\Props\Gears and Pulleys\Scripts\OscillateRotation.js" />

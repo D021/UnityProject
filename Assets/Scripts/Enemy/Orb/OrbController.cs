@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 // Orb controller (position and fire)
-public class OrbController : MonoBehaviour 
+public class OrbController : EnemyAi 
 {
 	public Transform turret;
 	public Transform muzzleFlash;
