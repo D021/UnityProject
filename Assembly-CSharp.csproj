@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_2;UNITY_4_3;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_GENERICS;ENABLE_SUBSTANCE;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_3_3;UNITY_4_3;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -47,20 +47,27 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Characters\Locomotion\Scripts\Locomotion.cs" />
-     <Compile Include="Assets\Locomotion System\AlignmentTracker.cs" />
-     <Compile Include="Assets\Locomotion System\GhostOriginal.cs" />
-     <Compile Include="Assets\Locomotion System\IK1JointAnalytic.cs" />
-     <Compile Include="Assets\Locomotion System\IKSimple.cs" />
-     <Compile Include="Assets\Locomotion System\IKSolver.cs" />
-     <Compile Include="Assets\Locomotion System\IMotionAnalyzer.cs" />
-     <Compile Include="Assets\Locomotion System\Interpolator.cs" />
-     <Compile Include="Assets\Locomotion System\LegAnimator.cs" />
-     <Compile Include="Assets\Locomotion System\LegController.cs" />
-     <Compile Include="Assets\Locomotion System\MotionAnalyzer.cs" />
-     <Compile Include="Assets\Locomotion System\MotionAnalyzerBackwards.cs" />
-     <Compile Include="Assets\Locomotion System\PolarGradientBandInterpolator.cs" />
-     <Compile Include="Assets\Locomotion System\TrajectoryVisualizer.cs" />
-     <Compile Include="Assets\Locomotion System\Util.cs" />
+     <Compile Include="Assets\Characters\Third Person Character\Scripts\AICharacterControl.cs" />
+     <Compile Include="Assets\Characters\Third Person Character\Scripts\ThirdPersonCharacter.cs" />
+     <Compile Include="Assets\Characters\Third Person Character\Scripts\ThirdPersonUserControl.cs" />
+     <Compile Include="Assets\Cross Platform Input\Scripts\AbstractButton.cs" />
+     <Compile Include="Assets\Cross Platform Input\Scripts\AxisTouchButton.cs" />
+     <Compile Include="Assets\Cross Platform Input\Scripts\Button.cs" />
+     <Compile Include="Assets\Cross Platform Input\Scripts\ButtonDownTextureChange.cs" />
+     <Compile Include="Assets\Cross Platform Input\Scripts\ButtonFactory.cs" />
+     <Compile Include="Assets\Cross Platform Input\Scripts\CrossPlatformInput.cs" />
+     <Compile Include="Assets\Cross Platform Input\Scripts\DisableMobileContent.cs" />
+     <Compile Include="Assets\Cross Platform Input\Scripts\Joystick.cs" />
+     <Compile Include="Assets\Cross Platform Input\Scripts\JoystickAbstract.cs" />
+     <Compile Include="Assets\Cross Platform Input\Scripts\PlatformSpecific\MobileInput.cs" />
+     <Compile Include="Assets\Cross Platform Input\Scripts\PlatformSpecific\StandaloneInput.cs" />
+     <Compile Include="Assets\Cross Platform Input\Scripts\TiltInput.cs" />
+     <Compile Include="Assets\Cross Platform Input\Scripts\TouchJoystick.cs" />
+     <Compile Include="Assets\Cross Platform Input\Scripts\TouchPad.cs" />
+     <Compile Include="Assets\Cross Platform Input\Scripts\TouchPadPositional.cs" />
+     <Compile Include="Assets\Cross Platform Input\Scripts\TouchPadRelativePositional.cs" />
+     <Compile Include="Assets\Cross Platform Input\Scripts\TouchPadSwipe.cs" />
+     <Compile Include="Assets\Cross Platform Input\Scripts\VirtualInput.cs" />
      <Compile Include="Assets\Materials\Party Pack\Scripts\CandleLight.cs" />
      <Compile Include="Assets\Materials\Party Pack\Scripts\CycleCookiesTimer.cs" />
      <Compile Include="Assets\Materials\Party Pack\Scripts\Rotate.cs" />
@@ -70,6 +77,8 @@
      <Compile Include="Assets\Materials\SimpleParticlePack\Scripts\ParticleTester.cs" />
      <Compile Include="Assets\Materials\SkyBox Volume 2\Stars01\NewBehaviourScript.cs" />
      <Compile Include="Assets\Props\GearProcedural\Gear.cs" />
+     <Compile Include="Assets\Props\Teleporter\Scripts\CanTeleport.cs" />
+     <Compile Include="Assets\Props\Teleporter\Scripts\Teleport.cs" />
      <Compile Include="Assets\Scripts\CharacterControllerLogic.cs" />
      <Compile Include="Assets\Scripts\CharacterState.cs" />
      <Compile Include="Assets\Scripts\DieInThreeSeconds.cs" />
@@ -99,8 +108,6 @@
      <Compile Include="Assets\Scripts\WeaponManager.cs" />
      <Compile Include="Assets\Scripts\WeaponShop.cs" />
      <Compile Include="Assets\Scripts\myGUI.cs" />
-     <Compile Include="Assets\Teleporter\Scripts\CanTeleport.cs" />
-     <Compile Include="Assets\Teleporter\Scripts\Teleport.cs" />
      <Compile Include="Assets\collider.cs" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\_DepthOfField\SeparableWeightedBlur.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\_BloomAndFlares\AddStuff.shader" />
@@ -122,7 +129,7 @@
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\PreDepthOfFieldZRead.shader" />
      <None Include="Assets\Shaders\Alpha-Cancel.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\_DepthOfField\CopyDepthToRGBA.shader" />
-     <None Include="Assets\Teleporter\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
+     <None Include="Assets\Props\Teleporter\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\GlowCompose.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\DepthRGBA8RadialBlur.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\ContrastComposite.shader" />
@@ -150,6 +157,7 @@
      <None Include="Assets\Standard Assets\Water\Sources\FX-Water Simple.shader" />
      <None Include="Assets\Materials\sky5X\README.txt" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\ChromaticAberrationShader.shader" />
+     <None Include="Assets\Cross Platform Input\Cross Platform Input Guidelines.txt" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\ColorCorrectionSelective.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\_BloomAndFlares\SeparableBlurPlus.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\EdgeBlurApply.shader" />
@@ -166,6 +174,7 @@
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\RadialBlur.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\_BloomAndFlares\HollywoodFlareStretch.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\VignettingShader.shader" />
+     <None Include="Assets\Characters\Third Person Character\Third Person Character Guidelines.txt" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\_BloomAndFlares\BrightPassFilter.shader" />
      <None Include="Assets\Materials\prototype_textures\readme.txt" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\_BloomAndFlares\LensFlareCreate.shader" />
