@@ -34,7 +34,11 @@ public class OrbController : EnemyAi
 	private int hitsThisRound = 0;
 	
 	private Vector3 aimTarget { get { return player.transform.position + new Vector3(0, 1.4f, 0); } }
-	
+
+	// from health controller
+	public GameObject hitParticles;
+	public AudioClip hitSound;
+
 	// Use this for initialization
 	void Start () {
 		// Add orb's own layer to mask
@@ -53,6 +57,8 @@ public class OrbController : EnemyAi
 		muzzleFlash.gameObject.SetActiveRecursively(false);
 		
 		gunAudioSource = audio;
+
+		base.myStart();
 	}
 	
 	void FixedUpdate () {
@@ -269,7 +275,18 @@ public class OrbController : EnemyAi
 		// will aim so bad that it's too easy to win.
 		if (Random.value < 0.2f)
 			rigidbody.AddForceAtPosition(rayAndHit.ray.direction * 15, rayAndHit.hit.point, ForceMode.Impulse);
-		
+
+		if (hitParticles) {
+			GameObject particles = Instantiate(
+				hitParticles,
+				rayAndHit.hit.point,
+				Quaternion.LookRotation(-rayAndHit.ray.direction)
+				) as GameObject;
+			particles.transform.parent = transform;
+		}
+		if (hitSound) {
+			AudioSource.PlayClipAtPoint(hitSound, rayAndHit.hit.point, 0.6f);
+		}
 	}
 	
 	// Function to monitor if player is in a safe spot yet
@@ -304,5 +321,12 @@ public class OrbController : EnemyAi
 		muzzleFlash.gameObject.SetActiveRecursively(true);
 		yield return new WaitForSeconds(0.05f);
 		muzzleFlash.gameObject.SetActiveRecursively(false);
+	}
+
+	// override EnemyAi take damage Script
+	public override void takeDamage(float amount) {
+		this.setHealth( this.getHealth() - amount);
+
+		base.takeDamage(amount);
 	}
 }

@@ -9,37 +9,33 @@ Shader "Hidden/LensFlareCreate" {
 	
 	struct v2f {
 		float4 pos : POSITION;
-		float2 uv[5] : TEXCOORD0;
+		float2 uv[4] : TEXCOORD0;
 	};
-	
-	float4 resolution;
-	
-	float4 color0;
-	float4 colorA;
-	float4 colorB; 
-	float4 colorC; 
-	float4 colorD; 
+		
+	fixed4 colorA;
+	fixed4 colorB; 
+	fixed4 colorC; 
+	fixed4 colorD; 
 	
 	sampler2D _MainTex;
 		
 	v2f vert( appdata_img v ) {
 		v2f o;
 		o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
-		o.uv[0] = ( v.texcoord.xy );
-		o.uv[1] = ( ( v.texcoord.xy - 0.5 ) * -0.85 ) + 0.5;
-		o.uv[2] = ( ( v.texcoord.xy - 0.5 ) * -1.45 ) + 0.5;
-		o.uv[3] = ( ( v.texcoord.xy - 0.5 ) * -2.55 ) + 0.5;
-		o.uv[4] = ( ( v.texcoord.xy - 0.5 ) * -4.15 ) + 0.5;
+
+		o.uv[0] = ( ( v.texcoord.xy - 0.5 ) * -0.85 ) + 0.5;
+		o.uv[1] = ( ( v.texcoord.xy - 0.5 ) * -1.45 ) + 0.5;
+		o.uv[2] = ( ( v.texcoord.xy - 0.5 ) * -2.55 ) + 0.5;
+		o.uv[3] = ( ( v.texcoord.xy - 0.5 ) * -4.15 ) + 0.5;
 		return o;
 	}
 	
-	half4 frag(v2f i) : COLOR {
-		half4 color = float4 (0,0,0,0);
-		color += tex2D(_MainTex, i.uv[0]) * color0;
-		color += tex2D(_MainTex, i.uv[1] ) * colorA;
-		color += tex2D(_MainTex, i.uv[2] ) * colorB;
-		color += tex2D(_MainTex, i.uv[3] ) * colorC;
-		color += tex2D(_MainTex, i.uv[4] ) * colorD;
+	fixed4 frag(v2f i) : COLOR {
+		fixed4 color = float4 (0,0,0,0);
+		color += tex2D(_MainTex, i.uv[0] ) * colorA;
+		color += tex2D(_MainTex, i.uv[1] ) * colorB;
+		color += tex2D(_MainTex, i.uv[2] ) * colorC;
+		color += tex2D(_MainTex, i.uv[3] ) * colorD;
 		return color;
 	}
 

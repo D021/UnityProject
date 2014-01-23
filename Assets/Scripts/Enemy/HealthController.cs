@@ -39,9 +39,7 @@ public class HealthController : MonoBehaviour {
 	}
 	
 	void OnHit (RayAndHit rayAndHit) {
-		health -= hitDamage;
-		health = Mathf.Clamp(health, 0, maxHealth);
-		
+
 		if (hitParticles) {
 			GameObject particles = Instantiate(
 				hitParticles,

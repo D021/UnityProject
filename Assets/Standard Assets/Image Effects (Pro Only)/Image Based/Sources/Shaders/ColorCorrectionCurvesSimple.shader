@@ -13,12 +13,12 @@ Shader "Hidden/ColorCorrectionCurvesSimple" {
 	
 	struct v2f {
 		float4 pos : POSITION;
-		float2 uv : TEXCOORD0;
+		half2 uv : TEXCOORD0;
 	};
 	
 	sampler2D _MainTex;
-	
 	sampler2D _RgbTex;
+	fixed _Saturation;
 	
 	v2f vert( appdata_img v ) 
 	{
@@ -28,20 +28,19 @@ Shader "Hidden/ColorCorrectionCurvesSimple" {
 		return o;
 	} 
 	
-	half4 frag(v2f i) : COLOR 
+	fixed4 frag(v2f i) : COLOR 
 	{
-		half4 color = tex2D(_MainTex, i.uv); 
-		half red = tex2D(_RgbTex, half2(color.r, 0.5/4.0)).r;
-		half green = tex2D(_RgbTex, half2(color.g, 1.5/4.0)).g;
-		half blue = tex2D(_RgbTex, half2(color.b, 2.5/4.0)).b;
-		#if SHADER_API_D3D9 // work around Cg codegen bug for D3D9...
-		red += 0.0001;
-		green += 0.0001;
-		blue += 0.0001;
-		#endif
-		color = half4(red, green, blue, color.a);
-				
-		return color;
+		fixed4 color = tex2D(_MainTex, i.uv); 
+		
+		fixed3 red = tex2D(_RgbTex, half2(color.r, 0.5/4.0)).rgb * fixed3(1,0,0);
+		fixed3 green = tex2D(_RgbTex, half2(color.g, 1.5/4.0)).rgb * fixed3(0,1,0);
+		fixed3 blue = tex2D(_RgbTex, half2(color.b, 2.5/4.0)).rgb * fixed3(0,0,1);
+		
+		color = fixed4(red+green+blue, color.a);
+
+		fixed lum = Luminance(color.rgb);
+		color.rgb = lerp(fixed3(lum,lum,lum), color.rgb, _Saturation);
+		return color;		
 	}
 
 	ENDCG 

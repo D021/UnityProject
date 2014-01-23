@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyDroneAi : MonoBehaviour {
+public class EnemyDroneAi : EnemyAi {
 
 	[SerializeField]
 	private float speed;

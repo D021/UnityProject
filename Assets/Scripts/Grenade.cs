@@ -55,15 +55,15 @@ public class Grenade : MonoBehaviour {
 				if ( hitColliders[i].tag.Equals("Enemy") )
 				{
 					// We hit an enemy, call the enemies damage script
-					EnemyDroneAi script = (EnemyDroneAi) hitColliders[i].GetComponent(typeof(EnemyDroneAi));
+					EnemyAi script = (EnemyAi) hitColliders[i].GetComponent(typeof(EnemyAi));
 					script.takeDamage(damage);
 				}
-				else if ( hitColliders[i].tag.Equals("Robot") )
-				{
-					// We hit an enemy, call the enemies damage script
-					EnemyRobotAi script = (EnemyRobotAi) hitColliders[i].GetComponent(typeof(EnemyRobotAi));
-					script.takeDamage(damage);
-				}
+//				else if ( hitColliders[i].tag.Equals("Robot") )
+//				{
+//					// We hit an enemy, call the enemies damage script
+//					EnemyRobotAi script = (EnemyRobotAi) hitColliders[i].GetComponent(typeof(EnemyRobotAi));
+//					script.takeDamage(damage);
+//				}
 
 				else if ( hitColliders[i].tag.Equals("Container") )
 				{

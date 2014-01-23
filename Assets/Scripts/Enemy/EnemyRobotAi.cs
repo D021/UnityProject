@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyRobotAi : MonoBehaviour {
+public class EnemyRobotAi : EnemyAi {
 
 	// Navigation, visual and sound awareness
 	private GameObject player;	// The player
@@ -16,8 +16,6 @@ public class EnemyRobotAi : MonoBehaviour {
 	private Animator animator;
 
 	[SerializeField]
-	private float health = 100f;
-	[SerializeField]
 	private float speed = 0.3f;
 	[SerializeField]
 	private float shotDistance = 5f;
@@ -30,8 +28,7 @@ public class EnemyRobotAi : MonoBehaviour {
 	[SerializeField]
 	private float deathTimer = 0f;
 
-	private Transform healthTextTransform;
-	private TextMesh healthText;
+
 	private Vector3 myLookAt;
 	// Use this for initialization
 	void Start () {
@@ -41,15 +38,11 @@ public class EnemyRobotAi : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag("Player");
 		playerTransform = player.transform;
 
-		healthTextTransform = transform.FindChild("EnemyText");
-		healthText = healthTextTransform.GetComponentInChildren(typeof(TextMesh)) as TextMesh;
-		healthText.text = health.ToString("N2");
+		base.myStart();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		// DEBUG
-		healthText.text = health.ToString("N2");
 
 		// the enemy is dying so check if dying animation is finished, if so, destroy gameobject, otherwise return
 		if (dying) 
@@ -105,14 +98,15 @@ public class EnemyRobotAi : MonoBehaviour {
 	}
 
 	// script accessicble by other gameobjects to make this guy take some damage
-	public void takeDamage(float amount)
+	public override void takeDamage(float amount)
 	{
-		health -= amount;
-		if (health <= 0 && !dying)
+		this.setHealth( this.getHealth() - amount);
+		if (this.getHealth() <= 0 && !dying)
 		{
 			dying = true;
 			animator.SetBool("Die", true);
 		}
+		base.takeDamage(amount);
 	}
 	
 }

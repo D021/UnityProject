@@ -54,10 +54,10 @@ public class LaserGun : Equippable {
 				EnemyDroneAi script = (EnemyDroneAi) hitInfo.transform.GetComponent(typeof(EnemyDroneAi));
 				script.takeDamage();
 			}
-			else if ( hitInfo.transform.tag.Equals("Robot") )
+			else if ( hitInfo.transform.tag.Equals("Enemy") )
 			{
 				// We hit an enemy, call the enemies damage script
-				EnemyRobotAi script = (EnemyRobotAi) hitInfo.transform.GetComponent(typeof(EnemyRobotAi));
+				EnemyAi script = (EnemyAi) hitInfo.transform.GetComponent(typeof(EnemyAi));
 				script.takeDamage(3f);
 			}
 		}

@@ -1,130 +1,75 @@
 
-public var highQuality : boolean = false;
-public var sensitivityDepth : float = 1.0;
-public var sensitivityNormals : float = 1.0;
-public var spread : float = 1.0;
-
-public var edgesIntensity : float = 1.0;
-public var edgesOnly : float = 0.0;
-public var edgesOnlyBgColor : Color = Color.white;
-
-public var edgeBlur : boolean = false;
-public var blurSpread : float = 0.75;
-public var blurIterations : int = 1;
+#pragma strict
 
 @script ExecuteInEditMode
-
 @script RequireComponent (Camera)
-@script AddComponentMenu ("Image Effects/Edge Detection (Depth-Normals)")
+@script AddComponentMenu ("Image Effects/Edge Detection (Geometry)")
 
-class EdgeDetectEffectNormals extends PostEffectsBase {
-	
-	public var edgeDetectHqShader : Shader;
-	private var _edgeDetectHqMaterial : Material = null;	
-	
+enum EdgeDetectMode {
+	TriangleDepthNormals = 0,
+	RobertsCrossDepthNormals = 1,
+	SobelDepth = 2,
+	SobelDepthThin = 3,
+}
+
+class EdgeDetectEffectNormals extends PostEffectsBase {	
+
+	public var mode : EdgeDetectMode = EdgeDetectMode.SobelDepthThin;
+	public var sensitivityDepth : float = 1.0f;
+	public var sensitivityNormals : float = 1.0f;
+	public var edgeExp : float = 1.0f;
+	public var sampleDist : float = 1.0f;
+	public var edgesOnly : float = 0.0f;
+	public var edgesOnlyBgColor : Color = Color.white;
+
 	public var edgeDetectShader : Shader;
-	private var _edgeDetectMaterial : Material = null;
-	
-	public var sepBlurShader : Shader;
-	private var _sepBlurMaterial : Material = null;
-	
-	public var edgeApplyShader : Shader;
-	private var _edgeApplyMaterial : Material = null;
+	private var edgeDetectMaterial : Material = null;
+	private var oldMode : EdgeDetectMode = EdgeDetectMode.SobelDepthThin;
 
-	function CreateMaterials () 
-	{
-		if (!_edgeDetectHqMaterial) {
-			if(!CheckShader(edgeDetectHqShader)) {
-				enabled = false;
-				return;
-			}
-			_edgeDetectHqMaterial = new Material(edgeDetectHqShader);	
-			_edgeDetectHqMaterial.hideFlags = HideFlags.HideAndDontSave;
-		}
-		
-		if (!_edgeDetectMaterial) {
-			if(!CheckShader(edgeDetectShader)) {
-				enabled = false;
-				return;
-			}
-			_edgeDetectMaterial = new Material(edgeDetectShader);	
-			_edgeDetectMaterial.hideFlags = HideFlags.HideAndDontSave;
-		}
-		
-		if (!_sepBlurMaterial) {
-			if(!CheckShader(sepBlurShader)) {
-				enabled = false;
-				return;
-			}
-			_sepBlurMaterial = new Material (sepBlurShader);
-			_sepBlurMaterial.hideFlags = HideFlags.HideAndDontSave;	
-		}
-		
-		if (!_edgeApplyMaterial) {
-			if(!CheckShader(edgeApplyShader)) {
-				enabled = false;
-				return;
-			}
-			_edgeApplyMaterial = new Material (edgeApplyShader);
-			_edgeApplyMaterial.hideFlags = HideFlags.HideAndDontSave;	
-		}
-		
-		if(!SystemInfo.SupportsRenderTextureFormat (RenderTextureFormat.Depth)) {
-			enabled = false;
-			return;	
-		}
-	}
+	function CheckResources () : boolean {	
+		CheckSupport (true);
 	
+		edgeDetectMaterial = CheckShaderAndCreateMaterial (edgeDetectShader,edgeDetectMaterial);
+		if (mode != oldMode)
+			SetCameraFlag ();
+
+		oldMode = mode;
+
+		if (!isSupported)
+			ReportAutoDisable ();
+		return isSupported;				
+	}
+
 	function Start () {
-		CreateMaterials ();
+		oldMode	= mode;
+	}
+
+	function SetCameraFlag () {
+		if (mode>1)
+			camera.depthTextureMode |= DepthTextureMode.Depth;		
+		else
+			camera.depthTextureMode |= DepthTextureMode.DepthNormals;		
+	}
+
+	function OnEnable() {
+		SetCameraFlag();
 	}
 	
-	function OnEnable () {
-		camera.depthTextureMode |= DepthTextureMode.DepthNormals;	
-	}
-	function OnRenderImage (source : RenderTexture, destination : RenderTexture)
-	{	
-		CreateMaterials ();
+	@ImageEffectOpaque
+	function OnRenderImage (source : RenderTexture, destination : RenderTexture) {	
+		if (CheckResources () == false) {
+			Graphics.Blit (source, destination);
+			return;
+		}
+				
+		var sensitivity : Vector2 = Vector2 (sensitivityDepth, sensitivityNormals);		
+		edgeDetectMaterial.SetVector ("_Sensitivity", Vector4 (sensitivity.x, sensitivity.y, 1.0, sensitivity.y));		
+		edgeDetectMaterial.SetFloat ("_BgFade", edgesOnly);	
+		edgeDetectMaterial.SetFloat ("_SampleDistance", sampleDist);		
+		edgeDetectMaterial.SetVector ("_BgColor", edgesOnlyBgColor);	
+		edgeDetectMaterial.SetFloat ("_Exponent", edgeExp);	
 		
-		var sensitivity : Vector2;
-		sensitivity.x = sensitivityDepth;
-		sensitivity.y = sensitivityNormals;
-	
-		if (highQuality) {
-			var lrTex1 : RenderTexture = RenderTexture.GetTemporary (source.width/2, source.height/2, 0); 
-			var lrTex2 : RenderTexture = RenderTexture.GetTemporary (source.width/2, source.height/2, 0); 
-			
-			_edgeDetectHqMaterial.SetVector ("sensitivity", Vector4 (sensitivity.x, sensitivity.y, Mathf.Max(0.1,spread), sensitivity.y));		
-			_edgeDetectHqMaterial.SetFloat("edgesOnly", edgesOnly);	
-			var vecCol : Vector4 = edgesOnlyBgColor;
-			_edgeDetectHqMaterial.SetVector("edgesOnlyBgColor", vecCol);		
-			
-			Graphics.Blit (source, source, _edgeDetectHqMaterial); // writes edges into .a
-			if(edgeBlur) {
-				Graphics.Blit (source, lrTex1);
-				
-				for (var i : int = 0; i < blurIterations; i++) {
-					_sepBlurMaterial.SetVector ("offsets", Vector4 (0.0, (blurSpread) / lrTex1.height, 0.0, 0.0));
-					Graphics.Blit (lrTex1, lrTex2, _sepBlurMaterial);
-					_sepBlurMaterial.SetVector ("offsets", Vector4 ((blurSpread) / lrTex1.width,  0.0, 0.0, 0.0));		
-					Graphics.Blit (lrTex2, lrTex1, _sepBlurMaterial);	
-				}
-				
-				_edgeApplyMaterial.SetTexture ("_EdgeTex", lrTex1);
-				_edgeApplyMaterial.SetFloat("edgesIntensity", edgesIntensity);
-				Graphics.Blit (source, destination, _edgeApplyMaterial);
-			} else {
-				_edgeApplyMaterial.SetTexture ("_EdgeTex", source);
-				_edgeApplyMaterial.SetFloat("edgesIntensity", edgesIntensity);
-				Graphics.Blit (source, destination, _edgeApplyMaterial);				
-			}
-			
-			RenderTexture.ReleaseTemporary(lrTex1);
-			RenderTexture.ReleaseTemporary(lrTex2);
-		}
-		else {
-			Graphics.Blit (source, destination, _edgeDetectMaterial);
-		}
+		Graphics.Blit (source, destination, edgeDetectMaterial, mode);
 	}
 }
 
