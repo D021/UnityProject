@@ -326,7 +326,8 @@ public class OrbController : EnemyAi
 	// override EnemyAi take damage Script
 	public override void takeDamage(float amount) {
 		this.setHealth( this.getHealth() - amount);
-
+		if (this.getHealth() < 0)
+			this.gameObject.SendMessage("Die");
 		base.takeDamage(amount);
 	}
 }

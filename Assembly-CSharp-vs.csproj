@@ -77,6 +77,19 @@
      <Compile Include="Assets\Materials\Party Pack\Scripts\TriggerSoundTouch.cs" />
      <Compile Include="Assets\Materials\SimpleParticlePack\Scripts\ParticleTester.cs" />
      <Compile Include="Assets\Materials\SkyBox Volume 2\Stars01\NewBehaviourScript.cs" />
+     <Compile Include="Assets\Props\Detonator\System\Detonator.cs" />
+     <Compile Include="Assets\Props\Detonator\System\DetonatorBurstEmitter.cs" />
+     <Compile Include="Assets\Props\Detonator\System\DetonatorCloudRing.cs" />
+     <Compile Include="Assets\Props\Detonator\System\DetonatorFireball.cs" />
+     <Compile Include="Assets\Props\Detonator\System\DetonatorForce.cs" />
+     <Compile Include="Assets\Props\Detonator\System\DetonatorGlow.cs" />
+     <Compile Include="Assets\Props\Detonator\System\DetonatorHeatwave.cs" />
+     <Compile Include="Assets\Props\Detonator\System\DetonatorLight.cs" />
+     <Compile Include="Assets\Props\Detonator\System\DetonatorShockwave.cs" />
+     <Compile Include="Assets\Props\Detonator\System\DetonatorSmoke.cs" />
+     <Compile Include="Assets\Props\Detonator\System\DetonatorSound.cs" />
+     <Compile Include="Assets\Props\Detonator\System\DetonatorSparks.cs" />
+     <Compile Include="Assets\Props\Detonator\System\DetonatorSpray.cs" />
      <Compile Include="Assets\Props\GearProcedural\Gear.cs" />
      <Compile Include="Assets\Props\Teleporter\Scripts\CanTeleport.cs" />
      <Compile Include="Assets\Props\Teleporter\Scripts\Teleport.cs" />
@@ -171,6 +184,7 @@
      <None Include="Assets\Scenes\SciFi level 2\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_Antialiasing\FXAAPreset3.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\FisheyeShader.shader" />
      <None Include="Assets\Scenes\SciFi level 2\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\Contrast Stretch\Apply.shader" />
+     <None Include="Assets\Props\Detonator\Resources\Detonator\Textures\HeatDistort.shader" />
      <None Include="Assets\Shaders\Particle Alpha Blend.shader" />
      <None Include="Assets\Materials\Party Pack\Sounds\Sounds License.txt" />
      <None Include="Assets\Shaders\Resources\TreeVertexLit.cginc" />

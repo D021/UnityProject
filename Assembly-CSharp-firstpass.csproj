@@ -83,6 +83,7 @@
      <None Include="Assets\Scenes\SciFi level 2\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_Antialiasing\FXAAPreset3.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\FisheyeShader.shader" />
      <None Include="Assets\Scenes\SciFi level 2\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\Contrast Stretch\Apply.shader" />
+     <None Include="Assets\Props\Detonator\Resources\Detonator\Textures\HeatDistort.shader" />
      <None Include="Assets\Shaders\Particle Alpha Blend.shader" />
      <None Include="Assets\Materials\Party Pack\Sounds\Sounds License.txt" />
      <None Include="Assets\Shaders\Resources\TreeVertexLit.cginc" />
