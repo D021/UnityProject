@@ -36,12 +36,12 @@ public class AICharacterControl : MonoBehaviour {
 			agent.transform.position = transform.position;
 
 	        // use the values to move the character
-			character.Move( agent.desiredVelocity, false, false, targetPos );
+//			character.Move( agent.desiredVelocity, false, false, targetPos );
 
 		} else {
 
 			// We still need to call the character's move function, but we send zeroed input as the move param.
-			character.Move ( Vector3.zero, false, false, transform.position + transform.forward * 100 );
+			//character.Move ( Vector3.zero, false, false, transform.position + transform.forward * 100 );
 
 		}
 	}

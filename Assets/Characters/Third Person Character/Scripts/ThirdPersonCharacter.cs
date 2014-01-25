@@ -4,13 +4,18 @@ using System.Collections;
 public class ThirdPersonCharacter : MonoBehaviour {
 	
 	[SerializeField] float jumpPower = 12;								// determines the jump force applied when jumping (and therefore the jump height)
+
+	[SerializeField] float myJumpPower = 0f;
+	[SerializeField] float maxJumpPower = 1f;
+	[SerializeField] float jumpInc = 0f;
 	[SerializeField] float airSpeed = 6;								// determines the max speed of the character while airborne
 	[SerializeField] float airControl = 2;								// determines the response speed of controlling the character while airborne
-	[Range(1,100)] [SerializeField] public float gravityMultiplier = 2;	// gravity modifier - often higher than natural gravity feels right for game characters
+	[Range(1,1000)] [SerializeField] public float gravityMultiplier = 2;	// gravity modifier - often higher than natural gravity feels right for game characters
 	[SerializeField][Range(0.1f,3f)] float moveSpeedMultiplier = 1;	    // how much the move speed of the character will be multiplied by
 	[SerializeField][Range(0.1f,3f)] float animSpeedMultiplier = 1;	    // how much the animation of the character will be multiplied by
 	[SerializeField] AdvancedSettings advancedSettings;                 // Container for the advanced settings class , thiss allows the advanced settings to be in a foldout in the inspector
 
+	GameObject targetField;
 
 	[System.Serializable]
 	public class AdvancedSettings
@@ -31,6 +36,8 @@ public class ThirdPersonCharacter : MonoBehaviour {
 
 	public Transform lookTarget { get; set; }               // The point where the character will be looking at
 
+	float target;
+
 	bool onGround;                                          // Is the character on the ground
 	Vector3 lookPos;                                      // The position where the character is looking at
 	float originalHeight;                                   // Used for tracking the original height of the characters capsule collider
@@ -50,6 +57,8 @@ public class ThirdPersonCharacter : MonoBehaviour {
 		animator = GetComponentInChildren<Animator>();
 		capsule = collider as CapsuleCollider;
 
+		targetField = GameObject.FindGameObjectWithTag("TargetField");
+
         // as can return null so we need to make sure thats its not before assigning to it
 	    if (capsule != null) {
 	        originalHeight = capsule.height;
@@ -63,13 +72,14 @@ public class ThirdPersonCharacter : MonoBehaviour {
 	
 	// The Move function is designed to be called from a separate component
 	// based on User input, or an AI control script
-	public void Move (Vector3 move, bool crouch, bool jump, Vector3 lookPos) {
+	public void Move (Vector3 move, bool crouch, bool jump, Vector3 lookPos, float target) {
 
 		// transfer input parameters to member variables.
 		this.moveInput = move;
 		this.crouchInput = crouch;
 		this.jumpInput = jump;
 		this.lookPos = lookPos;
+		this.target = target;
  
 		// grab current velocity, we will be changing it.
 		velocity = rigidbody.velocity;
@@ -94,6 +104,9 @@ public class ThirdPersonCharacter : MonoBehaviour {
 		} else {
 			HandleAirborneVelocities();
 		}
+
+		// HAndle Weapon Aim
+		HandleTargeting();
 	
 		UpdateAnimator (); // send input and other state parameters to the animator
 
@@ -127,6 +140,17 @@ public class ThirdPersonCharacter : MonoBehaviour {
 //			}
 //		}
 //	}
+
+	void HandleTargeting() {
+		if (target > .1) 
+		{
+			float vertical = Input.GetAxis("RightStickY");
+			Debug.Log(vertical);
+			Vector3 xaxis = new Vector3(1f, 0f, 0f);
+			Debug.Log(targetField.transform.position);
+			targetField.transform.RotateAround(this.transform.position, this.transform.localRotation * xaxis, vertical);
+		}
+	}
 
 	void PreventStandingInLowHeadroom ()
 	{
@@ -181,7 +205,7 @@ public class ThirdPersonCharacter : MonoBehaviour {
 					if (velocity.y <= 0) {
 						rigidbody.position = Vector3.MoveTowards (rigidbody.position, hit.point, Time.deltaTime * advancedSettings.groundStickyEffect);
 					}
-
+					myJumpPower = 0f;
 					onGround = true;
 					rigidbody.useGravity = false;
 					break;
@@ -239,7 +263,13 @@ public class ThirdPersonCharacter : MonoBehaviour {
 	{
 		// we allow some movement in air, but it's very different to when on ground
 		// (typically allowing a small change in trajectory)
-		Vector3 airMove = new Vector3 (moveInput.x * airSpeed, velocity.y, moveInput.z * airSpeed);
+		if (jumpInput && (myJumpPower < maxJumpPower) )
+		{
+				myJumpPower+=jumpInc;
+		}
+
+
+		Vector3 airMove = new Vector3 (moveInput.x * airSpeed, velocity.y * myJumpPower, moveInput.z * airSpeed);
 		velocity = Vector3.Lerp (velocity, airMove, Time.deltaTime * airControl);
 		rigidbody.useGravity = true;
 

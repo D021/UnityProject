@@ -10,6 +10,12 @@ public class ThirdPersonUserControl : MonoBehaviour {
 	private Vector3 lookPos;                            // The position that the character should be looking towards
     private ThirdPersonCharacter character;             // A reference to the ThirdPersonCharacter on the object
 
+	[SerializeField]
+	private float myJumpPower = 0f;
+	[SerializeField]
+	private float maxJumpPower = 1f;
+
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -26,6 +32,15 @@ public class ThirdPersonUserControl : MonoBehaviour {
 		// read inputs
 		bool crouch = Input.GetKey(KeyCode.C);
 		bool jump = CrossPlatformInput.GetButton("Jump");
+		float target = Input.GetAxis("Target");
+
+		if (jump && myJumpPower < maxJumpPower) 
+		{
+			myJumpPower+=0.1f;
+		}
+		else
+			myJumpPower = 0f;
+
 		float h = CrossPlatformInput.GetAxis("Horizontal");
 		float v = CrossPlatformInput.GetAxis("Vertical");
 
@@ -50,7 +65,7 @@ public class ThirdPersonUserControl : MonoBehaviour {
 	                  : transform.position + transform.forward * 100;
 
 	    // pass all parameters to the character control script
-		character.Move( move, crouch, jump, lookPos );
+		character.Move( move, crouch, jump, lookPos, target );
 	}
 
 
