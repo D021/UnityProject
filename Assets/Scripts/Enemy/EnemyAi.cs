@@ -12,6 +12,19 @@ public class EnemyAi : MonoBehaviour {
 
 	private Transform healthTextTransform;
 	private TextMesh healthText;
+	public float getHealth() { return this.health; }
+	public void setHealth(float h) { this.health = h; }
+
+	private bool isInTargetField = false;
+	private bool isTargetted = false;
+	private int targetKey = -1;
+	public bool IsTargetted() { return this.isTargetted; }
+	public void SetTargetted(bool b) { this.isTargetted = b; }
+	public bool IsInTargetField() { return this.isInTargetField; }
+	public void SetInTargetField(bool b) { this.isInTargetField = b; }
+	public int GetTargetKey() { return this.targetKey; }
+	public void SetTargetKey(int i) { this.targetKey = i; }
+
 	// Use this for initialization
 //	void Start () 
 //	{
@@ -83,8 +96,6 @@ public class EnemyAi : MonoBehaviour {
 		return;	
 	}
 
-	public float getHealth() { return this.health; }
 
-	public void setHealth(float h) { this.health = h; }
 
 }

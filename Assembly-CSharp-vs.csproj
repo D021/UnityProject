@@ -136,6 +136,7 @@
      <Compile Include="Assets\Scripts\WeaponManager.cs" />
      <Compile Include="Assets\Scripts\WeaponShop.cs" />
      <Compile Include="Assets\Scripts\myGUI.cs" />
+     <Compile Include="Assets\TargetField.cs" />
      <Compile Include="Assets\collider.cs" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\_DepthOfField\SeparableWeightedBlur.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\_BloomAndFlares\AddStuff.shader" />

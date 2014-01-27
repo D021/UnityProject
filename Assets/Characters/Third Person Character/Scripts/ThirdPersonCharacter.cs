@@ -15,8 +15,6 @@ public class ThirdPersonCharacter : MonoBehaviour {
 	[SerializeField][Range(0.1f,3f)] float animSpeedMultiplier = 1;	    // how much the animation of the character will be multiplied by
 	[SerializeField] AdvancedSettings advancedSettings;                 // Container for the advanced settings class , thiss allows the advanced settings to be in a foldout in the inspector
 
-	GameObject targetField;
-
 	[System.Serializable]
 	public class AdvancedSettings
 	{
@@ -36,10 +34,10 @@ public class ThirdPersonCharacter : MonoBehaviour {
 
 	public Transform lookTarget { get; set; }               // The point where the character will be looking at
 
-	float target;
 
+	
 	bool onGround;                                          // Is the character on the ground
-	Vector3 lookPos;                                      // The position where the character is looking at
+	Vector3 lookPos;                                      	// The position where the character is looking at
 	float originalHeight;                                   // Used for tracking the original height of the characters capsule collider
 	Animator animator;                                      // The animator for the character
 	float lastAirTime;                                      // USed for checking when the character was last in the air for controlling jumps
@@ -52,12 +50,17 @@ public class ThirdPersonCharacter : MonoBehaviour {
 	float forwardAmount;
 	Vector3 velocity;
 
+	float targetting;										// is targetting active... Target trigger down
+	bool hasTarget = false;									
+	TargetField targetField;
+	bool canSwitchTarget = true;
+	
 	// Use this for initialization
 	void Start () {
 		animator = GetComponentInChildren<Animator>();
 		capsule = collider as CapsuleCollider;
 
-		targetField = GameObject.FindGameObjectWithTag("TargetField");
+		targetField = (TargetField)GameObject.FindGameObjectWithTag("TargetField").GetComponent(typeof(TargetField));
 
         // as can return null so we need to make sure thats its not before assigning to it
 	    if (capsule != null) {
@@ -79,7 +82,7 @@ public class ThirdPersonCharacter : MonoBehaviour {
 		this.crouchInput = crouch;
 		this.jumpInput = jump;
 		this.lookPos = lookPos;
-		this.target = target;
+		this.targetting = target;
  
 		// grab current velocity, we will be changing it.
 		velocity = rigidbody.velocity;
@@ -142,14 +145,44 @@ public class ThirdPersonCharacter : MonoBehaviour {
 //	}
 
 	void HandleTargeting() {
-		if (target > .1) 
-		{
+		// If the target button has come up, reset everything
+		if (targetting < 0.1f) {
+			targetField.Reset();
+			lookTarget = null;
+			hasTarget = false;
+			canSwitchTarget = true;
+			return;
+		}
+		else {
+			// Get input
+			float rightY = Input.GetAxis("RightStickY");
+			float rightX = Input.GetAxis("RightStickX");
+
+			bool targetSwitched = false;
+			// If the player moved the right stick, try to acquire a new target
+			if (rightX > 0.3f || rightY > 0.3f) {
+				// Make sure the sticks have been reset before trying to get a new target
+				if (canSwitchTarget) 
+					targetSwitched = targetField.SwitchTarget(rightX, rightY);
+			}
+			else 
+				// The Axis have reset so we can switch targets
+				canSwitchTarget = true;
+			// If there is currently no target or if the target has Switched
+			if (targetSwitched || lookTarget == null) 
+				lookTarget = targetField.LockedTarget();
+		}
+		// Moveable target Field
+		/*if (!hasTarget) {
+			// Move the target field based on player input
 			float vertical = Input.GetAxis("RightStickY");
-			Debug.Log(vertical);
 			Vector3 xaxis = new Vector3(1f, 0f, 0f);
-			Debug.Log(targetField.transform.position);
 			targetField.transform.RotateAround(this.transform.position, this.transform.localRotation * xaxis, vertical);
 		}
+		else {
+
+			
+		}*/
 	}
 
 	void PreventStandingInLowHeadroom ()

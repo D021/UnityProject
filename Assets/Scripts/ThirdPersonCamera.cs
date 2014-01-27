@@ -110,7 +110,11 @@ public class ThirdPersonCamera : MonoBehaviour
 	private float distanceAwayFree;
 	private float distanceUpFree;        
 	private Vector2 rightStickPrevFrame = Vector2.zero;
-	
+
+
+	// Collisions to Ignore
+	private Collider targetFieldCollider;
+
 	#endregion
 	
 	
@@ -158,6 +162,11 @@ public class ThirdPersonCamera : MonoBehaviour
 	/// </summary>
 	void Start ()
 	{
+		// Ignore collisions with...
+		// TargetField
+		targetFieldCollider = GameObject.FindWithTag("TargetField").GetComponent<Collider>();
+		Physics.IgnoreCollision(collider, targetFieldCollider);
+
 		parentRig = this.transform.parent;
 		if (parentRig == null)
 		{
