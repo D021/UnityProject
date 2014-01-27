@@ -113,7 +113,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
 
 	// Collisions to Ignore
-	private Collider targetFieldCollider;
+	private CapsuleCollider targetFieldCollider;
 
 	#endregion
 	
@@ -164,7 +164,7 @@ public class ThirdPersonCamera : MonoBehaviour
 	{
 		// Ignore collisions with...
 		// TargetField
-		targetFieldCollider = GameObject.FindWithTag("TargetField").GetComponent<Collider>();
+		targetFieldCollider = GameObject.FindWithTag("TargetField").GetComponent<CapsuleCollider>();
 		Physics.IgnoreCollision(collider, targetFieldCollider);
 
 		parentRig = this.transform.parent;

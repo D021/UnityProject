@@ -4,13 +4,11 @@ using System.Collections;
 public class EnemyRobotAi : EnemyAi {
 
 	// Navigation, visual and sound awareness
-	private GameObject player;	// The player
-	private Transform playerTransform;
-	private Transform enemyTransform;
 	private bool detectsPlayer = true;
 	private Vector3 toPlayer;
-
-
+	private GameObject player;
+	private Transform enemyTransform;
+	public Transform playerTransform;	// The players feet
 	// This enemies Components
 	private CharacterController enemyCharacterController;
 	private Animator animator;

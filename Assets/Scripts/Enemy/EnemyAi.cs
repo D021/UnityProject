@@ -5,10 +5,7 @@ public class EnemyAi : MonoBehaviour {
 
 	private float health = 100;
 
-	private GameObject player;
-	private Transform enemyTransform;
-	private Transform playerTransform;	// The players feet
-	private Vector3 toPlayer;
+
 
 	private Transform healthTextTransform;
 	private TextMesh healthText;
@@ -73,6 +70,8 @@ public class EnemyAi : MonoBehaviour {
 		healthTextTransform = transform.FindChild("EnemyText");
 		healthText = healthTextTransform.GetComponentInChildren(typeof(TextMesh)) as TextMesh;
 		healthText.text = this.getHealth().ToString("N2");
+
+
 	}
 
 	void goToPlayer () 

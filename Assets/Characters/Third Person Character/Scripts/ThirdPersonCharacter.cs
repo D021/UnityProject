@@ -54,13 +54,20 @@ public class ThirdPersonCharacter : MonoBehaviour {
 	bool hasTarget = false;									
 	TargetField targetField;
 	bool canSwitchTarget = true;
-	
+	bool notReset = false;
+	Vector3 lookTargetXZ;
+
 	// Use this for initialization
 	void Start () {
 		animator = GetComponentInChildren<Animator>();
 		capsule = collider as CapsuleCollider;
 
-		targetField = (TargetField)GameObject.FindGameObjectWithTag("TargetField").GetComponent(typeof(TargetField));
+
+		targetField = (TargetField)transform.FindChild("TargetField").GetComponent(typeof(TargetField));
+		if (targetField == null) 
+		{
+			Debug.Log("Shit 2!");
+		}
 
         // as can return null so we need to make sure thats its not before assigning to it
 	    if (capsule != null) {
@@ -147,30 +154,52 @@ public class ThirdPersonCharacter : MonoBehaviour {
 	void HandleTargeting() {
 		// If the target button has come up, reset everything
 		if (targetting < 0.1f) {
+			animator.SetBool("Targetting", false);
 			targetField.Reset();
 			lookTarget = null;
 			hasTarget = false;
 			canSwitchTarget = true;
 			return;
 		}
+		// Target Button Down
 		else {
 			// Get input
 			float rightY = Input.GetAxis("RightStickY");
 			float rightX = Input.GetAxis("RightStickX");
-
-			bool targetSwitched = false;
-			// If the player moved the right stick, try to acquire a new target
-			if (rightX > 0.3f || rightY > 0.3f) {
-				// Make sure the sticks have been reset before trying to get a new target
-				if (canSwitchTarget) 
+			// Is the player currently targetting something
+			if (hasTarget)
+			{
+				bool targetSwitched = false;
+				// check if the player is attempting to switch targets
+				if (canSwitchTarget && (rightX > 0.5f || rightY > 0.5f) ) {
 					targetSwitched = targetField.SwitchTarget(rightX, rightY);
+				}
+				// If a new target was found, update our current target
+				if (targetSwitched) {
+					// TODO implement switching targets
+				}
+				// Make sure player is always looking at the target, leave out y axis
+				lookTargetXZ = lookTarget.position;
+				lookTargetXZ.y = 0;
+				this.transform.LookAt(lookTargetXZ);
+				// make sure we are in Targetting mode in our animator
+				animator.SetBool("Targetting", true);
 			}
-			else 
-				// The Axis have reset so we can switch targets
+			// Player does not have a current target
+			else
+			{
+				// try to find a closest target
+				lookTarget = targetField.GetClosetTarget();
+				if (lookTarget != null) {
+					// We have found a target
+					hasTarget = true;
+				}
+			}
+			// Right stick has reset so allow for target switching
+			if (rightX < 0.3f && rightY < 0.3f) {
 				canSwitchTarget = true;
-			// If there is currently no target or if the target has Switched
-			if (targetSwitched || lookTarget == null) 
-				lookTarget = targetField.LockedTarget();
+			}
+
 		}
 		// Moveable target Field
 		/*if (!hasTarget) {

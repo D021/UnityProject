@@ -23,7 +23,7 @@ public class TargetField : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// DEBUG
-		Debug.Log(targets.Count);
+		//Debug.Log(targets.Count);
 		foreach(Transform t in targets.Values) {
 			Debug.DrawLine(playerTranform.position, t.position, Color.red);
 		}
@@ -71,7 +71,19 @@ public class TargetField : MonoBehaviour {
 		}
 	}
 
-	public Transform LockedTarget() {
+	// Should be called as soon as the player presses the lock Target Button
+	public Transform GetClosetTarget() {
+		float shortestDistance = Mathf.Infinity;
+		foreach(Transform t in targets.Values) {
+			float distance = Vector3.Distance(playerTranform.position, t.position);
+			if (distance < shortestDistance) {
+				shortestDistance = distance;
+				lockedTarget = t;
+			}
+		}
+		if (lockedTarget != null)
+			Debug.DrawLine(playerTranform.position, lockedTarget.position, Color.blue);
+		Debug.Log(lockedTarget);
 		return lockedTarget;
 	}
 
