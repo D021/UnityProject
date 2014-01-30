@@ -56,7 +56,7 @@ public class EnemyDroneAi : EnemyAi {
 		// Update reload time
 		reloadTimer += Time.deltaTime;
 		// Debug path to player
-		Debug.DrawLine(enemyTransform.position, playerTransform.position);
+		// Debug.DrawLine(enemyTransform.position, playerTransform.position);
 		toPlayer = playerTransform.position - enemyTransform.position;
 
 		// Enemy sees player!! Attack mode!

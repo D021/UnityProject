@@ -161,45 +161,50 @@ public class ThirdPersonCharacter : MonoBehaviour {
 			canSwitchTarget = true;
 			return;
 		}
-		// Target Button Down
+		// TARGET BUTTON DOWN
 		else {
 			// Get input
-			float rightY = Input.GetAxis("RightStickY");
-			float rightX = Input.GetAxis("RightStickX");
+			float rightY = -Input.GetAxisRaw("RightStickY");		// Note: Inverted Axis
+			float rightX = Input.GetAxisRaw("RightStickX");
+			float horizontalMovement = Input.GetAxis("Horizontal");
 			// Is the player currently targetting something
-			if (hasTarget)
-			{
-				bool targetSwitched = false;
-				// check if the player is attempting to switch targets
-				if (canSwitchTarget && (rightX > 0.5f || rightY > 0.5f) ) {
+			if (hasTarget) {
+				// Check if the player is attempting to switch targets
+				Transform targetSwitched = null;
+				if (canSwitchTarget && (Mathf.Abs(rightX) > 0.5f || Mathf.Abs (rightY) > 0.5f) ) {
 					targetSwitched = targetField.SwitchTarget(rightX, rightY);
+					canSwitchTarget = false;
 				}
+
 				// If a new target was found, update our current target
-				if (targetSwitched) {
+				if (targetSwitched != null) {
 					// TODO implement switching targets
+					lookTarget = targetSwitched;
 				}
+
 				// Make sure player is always looking at the target, leave out y axis
 				lookTargetXZ = lookTarget.position;
-				lookTargetXZ.y = 0;
+				lookTargetXZ.y = this.transform.position.y;
 				this.transform.LookAt(lookTargetXZ);
-				// make sure we are in Targetting mode in our animator
+
+				// Update Animator: make sure we are in Targetting mode, set strafe movement
 				animator.SetBool("Targetting", true);
+				animator.SetFloat("Strafe", horizontalMovement);
 			}
 			// Player does not have a current target
-			else
-			{
-				// try to find a closest target
+			else {
+				// Try to find a closest target
 				lookTarget = targetField.GetClosetTarget();
 				if (lookTarget != null) {
 					// We have found a target
 					hasTarget = true;
 				}
 			}
+
 			// Right stick has reset so allow for target switching
-			if (rightX < 0.3f && rightY < 0.3f) {
+			if (Mathf.Abs(rightX) < 0.3f && Mathf.Abs(rightY) < 0.3f) {
 				canSwitchTarget = true;
 			}
-
 		}
 		// Moveable target Field
 		/*if (!hasTarget) {
@@ -208,10 +213,8 @@ public class ThirdPersonCharacter : MonoBehaviour {
 			Vector3 xaxis = new Vector3(1f, 0f, 0f);
 			targetField.transform.RotateAround(this.transform.position, this.transform.localRotation * xaxis, vertical);
 		}
-		else {
-
-			
-		}*/
+		else {}
+		*/
 	}
 
 	void PreventStandingInLowHeadroom ()
