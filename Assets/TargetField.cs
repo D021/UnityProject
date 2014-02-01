@@ -19,7 +19,7 @@ public class TargetField : MonoBehaviour {
 	[SerializeField]
 	private int keyCount = 0;
 
-	// List for potential new targets
+	// 
 	private Transform bestTarget;
 
 	// Direction vector of joyStick movement
@@ -31,6 +31,8 @@ public class TargetField : MonoBehaviour {
 	[SerializeField]
 	float minAngle;
 
+	[SerializeField]
+	private Transform crosshair;
 
 	// Use this for initialization
 	void Start () {
@@ -44,13 +46,13 @@ public class TargetField : MonoBehaviour {
 		// DEBUG
 		//Debug.Log(targets.Count);
 		foreach(Transform t in targets.Values) {
-			Debug.DrawLine(playerTransform.position, t.position, Color.red);
+			Debug.DrawLine(playerTransform.position, t.position, Color.grey);
 		}
 		// END DEBUG
 
 		if (hasTarget)
 		{
-
+			crosshair.transform.position = lockedTarget.position;
 		}
 		else 
 		{
@@ -58,6 +60,12 @@ public class TargetField : MonoBehaviour {
 		}
 	}
 
+	/*				OnTriggerEvent
+	 * 
+	 *  When an enemy or object enters the target field:
+	 * 		1. add their transform to Dictionary of targets (key, tranform)
+	 * 		2. SetTheEnemies local targetKey variable to 1 + the key count
+	 */
 	void OnTriggerEnter(Collider other) {
 		// Check if the collider is an Enemy
 		if (other.tag == "Enemy") {
@@ -69,10 +77,18 @@ public class TargetField : MonoBehaviour {
 				targets.Add(keyCount, other.transform);
 				// Set index in list for retrieval, mapping
 				enemy.SetTargetKey(keyCount++);
+				enemy.SetInTargetField(true);
 			}
 		}
 	}
 
+	/*				OnTriggerExit
+	 * 
+	 * When an enemy or object leaves the target field:
+	 * 		1. Remove the enemy from our dictionary by grabbing it's local variable targetKey
+	 * 		2. 
+	 * 
+	 */
 	// POSSIBLE PERFORMANCE ENHANCEMENT: Maybe do this in update by checking each collider in our dictionary with this one, 
 	// but this probably won't be needed once layers are implemented
 	void OnTriggerExit(Collider other) {
@@ -90,7 +106,12 @@ public class TargetField : MonoBehaviour {
 		}
 	}
 
-	// Should be called as soon as the player presses the lock Target Button
+	/* 
+	 * 					GetClosestTarget()
+	 * 
+	 * 	Should be called as soon as the player presses the lock Target Button
+	 *  Returns the closest target inside the target field to the player
+	 */
 	public Transform GetClosetTarget() {
 		float shortestDistance = Mathf.Infinity;
 		foreach(Transform t in targets.Values) {
@@ -105,6 +126,7 @@ public class TargetField : MonoBehaviour {
 		
 			// Make camera lookAt this target
 			cameraScript.setLookAt(lockedTarget.position);
+			hasTarget = true;
 		}
 		Debug.Log(lockedTarget);
 		return lockedTarget;
@@ -118,10 +140,8 @@ public class TargetField : MonoBehaviour {
 	// Given some input from the controller, find a target in that direction from current target
 	public Transform SwitchTarget(float rightX, float rightY) {
 
-		// We need to reverse these because, well they just need to be reversed. Known by testing.
 		stickX = rightX;
 		stickY = rightY;
-
 
 		// PLANE for projections. 
 		// NORMAL FOR PLAYER TO TARGET
@@ -138,13 +158,10 @@ public class TargetField : MonoBehaviour {
 		Debug.Log("RightX: " + rightX + "  RightY: " + rightY);
 		//Vector3 drawPoint = playerTransform.right * 2 * rightX + playerTransform.up * 2 * rightY;
 		drawPoint = cameraTransform.right * rightX + cameraTransform.up * rightY;
-		//drawPoint = lockedTarget.position + lockedTarget.InverseTransformDirection(drawPoint);
-		//Debug.DrawLine(lockedTarget.position, drawPoint, Color.blue, 5.0f);
-
 		stickPoint = lockedTarget.position - drawPoint;
-		Debug.Log("StickPoint " + lockedTarget.InverseTransformDirection(drawPoint));
 		Debug.DrawLine(lockedTarget.position, stickPoint, Color.yellow, 5.0f);
 
+		// Direction vector from target to stick direction
 		stickDir = lockedTarget.position - stickPoint;
 
 		bestTarget = getBestTarget(); 
@@ -158,7 +175,6 @@ public class TargetField : MonoBehaviour {
 		bestTarget = null;
 		float shortestDistance = Mathf.Infinity;
 
-		// Iterate over colliders
 		foreach(Transform t in targets.Values) {
 			// Make sure we are not using the current target as a potential target
 			if (lockedTarget.GetComponent<EnemyAi>().GetTargetKey() == t.GetComponent<EnemyAi>().GetTargetKey() )
@@ -166,13 +182,11 @@ public class TargetField : MonoBehaviour {
 
 			// Between locked target and potential target
 			Vector3 potentialToLocked = t.position - lockedTarget.position;
-			Debug.DrawLine(t.position, lockedTarget.position, Color.white, 5f);
+			//Debug.DrawLine(t.position, lockedTarget.position, Color.white, 5f);
 
 			// Multiply component by component to normal
 			Vector3 dist = Vector3.Scale(potentialToLocked, normal);
 			dist = dist.x * normal + dist.y * normal + dist.z * normal;
-			//Debug.DrawLine(lockedTarget.position, Vector3.Scale(normal, dist), Color.blue, 10f); 
-			Debug.DrawRay(lockedTarget.position, normal*10, Color.black, 10f);
 
 			// Projected Point
 			Vector3 projectedPoint = t.position - dist;
@@ -197,10 +211,6 @@ public class TargetField : MonoBehaviour {
 			}
 		}
 		return bestTarget;
-	}
-
-	private Vector3 getProjection() {
-		return new Vector3(0f,0f,0f);
 	}
 
 	// This gets called whenever the target button comes up
