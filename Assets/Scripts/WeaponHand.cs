@@ -87,7 +87,7 @@ public class WeaponHand : MonoBehaviour {
 		reloadTime = currentEquippedWeapon.getReloadTime();
 		currentEquippedWeapon.setReloadTimer(reloadTime+1.0f);
 		reloadTimer = currentEquippedWeapon.getReloadTimer();
-		currentEquippedWeapon.setReloadTime(2.0f);
+		currentEquippedWeapon.setReloadTime(0.5f);
 		//equips[0].setShotPower(1000);
 		currentEquippedWeapon.setShotOffset(2);
 		currentEquippedWeapon.setShotPower(900);

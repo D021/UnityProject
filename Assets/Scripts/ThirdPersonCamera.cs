@@ -111,6 +111,7 @@ public class ThirdPersonCamera : MonoBehaviour
 	private float distanceUpFree;        
 	private Vector2 rightStickPrevFrame = Vector2.zero;
 
+	Vector3 lookAt;
 
 	// Collisions to Ignore
 	private CapsuleCollider targetFieldCollider;
@@ -204,7 +205,7 @@ public class ThirdPersonCamera : MonoBehaviour
 		float leftY = Input.GetAxis("Vertical");        
 		
 		Vector3 characterOffset = followXform.position + new Vector3(0f, distanceUp, 0f);
-		Vector3 lookAt = characterOffset;
+
 		Vector3 targetPosition = Vector3.zero;
 		
 		// Determine camera state
@@ -238,7 +239,10 @@ public class ThirdPersonCamera : MonoBehaviour
 		{
 		case CamStates.Behind:
 			ResetCamera();
-			
+
+			// Reset lookAt in case we were just in targetting mode
+			lookAt = characterOffset;
+
 			// Only update camera look direction if moving
 			//if (anim.Speed > follow.LocomotionThreshold && follow.IsInLocomotion() && !follow.IsInPivot())
 			//{
@@ -256,7 +260,8 @@ public class ThirdPersonCamera : MonoBehaviour
 			
 			targetPosition = characterOffset + followXform.up * distanceUp - Vector3.Normalize(curLookDir) * distanceAway;
 			Debug.DrawLine(followXform.position, targetPosition, Color.magenta);
-			
+
+			lookAt = characterOffset;
 			break;
 		case CamStates.Target:
 			ResetCamera();
@@ -264,9 +269,13 @@ public class ThirdPersonCamera : MonoBehaviour
 			curLookDir = followXform.forward;
 			
 			targetPosition = characterOffset + followXform.up * distanceUp - lookDir * distanceAway;
-			
+
 			break;
 		case CamStates.Free:
+
+			// Reset lookat in case we were just in targetting mode
+			lookAt = characterOffset;
+
 			lookWeight = Mathf.Lerp(lookWeight, 0.0f, Time.deltaTime * firstPersonLookSpeed);
 			
 			// Move height and distance from character in separate parentRig transform since RotateAround has control of both position and rotation
@@ -335,7 +344,9 @@ public class ThirdPersonCamera : MonoBehaviour
 	
 	
 	#region Methods
-	
+
+	public void setLookAt(Vector3 v) { lookAt = v; }
+
 	private void SmoothPosition(Vector3 fromPos, Vector3 toPos)
 	{                
 		// Making a smooth transition between camera's current position and the position it wants to be in
@@ -359,6 +370,7 @@ public class ThirdPersonCamera : MonoBehaviour
 	/// </summary>
 	private void ResetCamera()
 	{
+
 		lookWeight = Mathf.Lerp(lookWeight, 0.0f, Time.deltaTime * firstPersonLookSpeed);
 		transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.identity, Time.deltaTime);
 	}

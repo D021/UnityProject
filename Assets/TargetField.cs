@@ -7,8 +7,12 @@ public class TargetField : MonoBehaviour {
 	private bool hasTarget = false;
 	[SerializeField]
 	private Transform playerTransform;
-	private Transform lockedTarget;
+	[SerializeField]
+	private Transform cameraTransform;
+	private ThirdPersonCamera cameraScript;
 
+	private Transform lockedTarget;
+	
 	// List of targets that this collider collides with
 	[SerializeField]
 	private Dictionary<int, Transform> targets;
@@ -16,11 +20,23 @@ public class TargetField : MonoBehaviour {
 	private int keyCount = 0;
 
 	// List for potential new targets
-	private List<Transform> potentialTargets;
-	
+	private Transform bestTarget;
+
+	// Direction vector of joyStick movement
+	Vector3 drawPoint;
+	Vector3 stickPoint;
+	Vector3 stickDir;
+
+	// Minimum angle between potential target's projected point and locked target for potential target to be considered 
+	[SerializeField]
+	float minAngle;
+
+
 	// Use this for initialization
 	void Start () {
 		targets = new Dictionary<int, Transform>();
+
+		cameraScript = cameraTransform.GetComponent<ThirdPersonCamera>();
 	}
 	
 	// Update is called once per frame
@@ -84,8 +100,12 @@ public class TargetField : MonoBehaviour {
 				lockedTarget = t;
 			}
 		}
-		if (lockedTarget != null)
+		if (lockedTarget != null) {
 			Debug.DrawLine(playerTransform.position, lockedTarget.position, Color.blue);
+		
+			// Make camera lookAt this target
+			cameraScript.setLookAt(lockedTarget.position);
+		}
 		Debug.Log(lockedTarget);
 		return lockedTarget;
 	}
@@ -97,62 +117,86 @@ public class TargetField : MonoBehaviour {
 	// @return returns true if a new target gets acquired, false otherwise
 	// Given some input from the controller, find a target in that direction from current target
 	public Transform SwitchTarget(float rightX, float rightY) {
+
+		// We need to reverse these because, well they just need to be reversed. Known by testing.
 		stickX = rightX;
 		stickY = rightY;
 
 
 		// PLANE for projections. 
-		normal = new Vector3(lockedTarget.position.x - playerTransform.position.x,
-		                             0, lockedTarget.position.z - playerTransform.position.z).normalized; 	// Gives a normal 
+		// NORMAL FOR PLAYER TO TARGET
+		// normal = new Vector3(lockedTarget.position.x - playerTransform.position.x,
+		//                             0, lockedTarget.position.z - playerTransform.position.z).normalized; 
+		// NORMAL FOR CAMERA TO TARGET
+		normal = new Vector3(lockedTarget.position.x - cameraTransform.position.x,
+		                                                  0, lockedTarget.position.z - cameraTransform.position.z).normalized; 	// Gives a normal 
+
 		Debug.DrawRay(lockedTarget.position, normal*5, Color.black, 5f);
 
 		// Point made by joystick movement, converted to lockedTargetSpace
+		// We actually need this to be based on the camera's position
 		Debug.Log("RightX: " + rightX + "  RightY: " + rightY);
-		Vector3 drawPoint = playerTransform.right * 2 * rightX + playerTransform.up * 2 * rightY;
-		drawPoint = lockedTarget.InverseTransformDirection(drawPoint);
-		Debug.DrawRay(lockedTarget.position, drawPoint, Color.blue, 5.0f);
+		//Vector3 drawPoint = playerTransform.right * 2 * rightX + playerTransform.up * 2 * rightY;
+		drawPoint = cameraTransform.right * rightX + cameraTransform.up * rightY;
+		//drawPoint = lockedTarget.position + lockedTarget.InverseTransformDirection(drawPoint);
+		//Debug.DrawLine(lockedTarget.position, drawPoint, Color.blue, 5.0f);
 
-		potentialTargets = getPotentialTargets(); 
+		stickPoint = lockedTarget.position - drawPoint;
+		Debug.Log("StickPoint " + lockedTarget.InverseTransformDirection(drawPoint));
+		Debug.DrawLine(lockedTarget.position, stickPoint, Color.yellow, 5.0f);
 
-		if (potentialTargets.Count == 0) { return null; }
-		return lockedTarget;
+		stickDir = lockedTarget.position - stickPoint;
+
+		bestTarget = getBestTarget(); 
+		if (bestTarget == null) { return lockedTarget; }
+		lockedTarget = bestTarget;
+		return bestTarget;
 	}
 
-	List<Transform> getPotentialTargets ()
+	Transform getBestTarget ()
 	{
-		List<Transform> potTargets = new List<Transform>();
+		bestTarget = null;
+		float shortestDistance = Mathf.Infinity;
 
 		// Iterate over colliders
 		foreach(Transform t in targets.Values) {
-			
-				// Setting the enemies' world coordinates to local coordinate relative to the selected target
-				// Vector3 potentialTarget = lockedTarget.transform.InverseTransformPoint(t.position);
+			// Make sure we are not using the current target as a potential target
+			if (lockedTarget.GetComponent<EnemyAi>().GetTargetKey() == t.GetComponent<EnemyAi>().GetTargetKey() )
+				continue;
 
-			//Vector3 potentialToLocked = lockedTarget.position - t.position;
+			// Between locked target and potential target
 			Vector3 potentialToLocked = t.position - lockedTarget.position;
-			//Debug.DrawRay(t.position, potentialToLocked, Color.white, 5f);
 			Debug.DrawLine(t.position, lockedTarget.position, Color.white, 5f);
 
-			// Multiply component by component
+			// Multiply component by component to normal
 			Vector3 dist = Vector3.Scale(potentialToLocked, normal);
 			dist = dist.x * normal + dist.y * normal + dist.z * normal;
 			//Debug.DrawLine(lockedTarget.position, Vector3.Scale(normal, dist), Color.blue, 10f); 
-			Debug.DrawRay(lockedTarget.position, normal*10, Color.blue, 10f);
+			Debug.DrawRay(lockedTarget.position, normal*10, Color.black, 10f);
 
+			// Projected Point
 			Vector3 projectedPoint = t.position - dist;
+			Debug.DrawLine(t.position, projectedPoint, Color.green, 5f);			                                            
 
-			// Rotate point from enemy.forward to playerTranform.forward
-			Quaternion rotation = Quaternion.FromToRotation(t.forward, playerTransform.forward);
+			// Draw line from projected point to locked target
+			Vector3 projectedToLocked = projectedPoint - lockedTarget.position;
+			Debug.DrawLine(projectedPoint, lockedTarget.position, Color.grey, 5f);
 
-			Debug.DrawLine(t.position, projectedPoint, Color.green, 5f);
-			                                               
-			// Move projected point to lockedTarget coodinates
-			Debug.Log("Projected Point - X: " + projectedPoint.x +
-			          " Y: " + projectedPoint.y +
-			          " Z " + projectedPoint.z);
-
+			// Get angle between joystick direction and projected point
+			Debug.DrawLine(projectedPoint, stickPoint, Color.black, 10f);
+			float angle = Vector3.Angle(projectedToLocked, stickDir); 
+			Debug.Log("Angle: " + angle);
+			if (angle < minAngle) {
+				// Filter by closest projected point to target
+				Debug.Log("XY Distance: " +  Vector3.Magnitude(lockedTarget.position - t.position));
+				if (Vector3.Magnitude(projectedToLocked) < shortestDistance) 
+				{
+					bestTarget = t;
+					shortestDistance = Vector3.Magnitude(lockedTarget.position - t.position);
+				}
+			}
 		}
-		return potTargets;
+		return bestTarget;
 	}
 
 	private Vector3 getProjection() {

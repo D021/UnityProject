@@ -8,7 +8,7 @@ public class GrenadeLauncher : Equippable {
 	private Grenade grenade;
 	[SerializeField]
 	public int shotPower = 1000;
-	private int m_reloadTime = 2;
+	private float m_reloadTime = 0.5f;
 	[SerializeField]
 	private AudioSource shotSoundClip;
 
