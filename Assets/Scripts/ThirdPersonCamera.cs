@@ -213,7 +213,6 @@ public class ThirdPersonCamera : MonoBehaviour
 		if (Input.GetAxis("Target") > TARGETING_THRESHOLD)
 		{
 			// Target Mode!!
-			
 			camState = CamStates.Target;
 		}
 		else
@@ -234,7 +233,7 @@ public class ThirdPersonCamera : MonoBehaviour
 		}
 		
 		// Set the Look At Weight - amount to use look at IK vs using the head's animation
-		// Execute camera state
+		Debug.Log(camState);
 		switch (camState)
 		{
 		case CamStates.Behind:

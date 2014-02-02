@@ -143,13 +143,17 @@ public class TargetField : MonoBehaviour {
 		stickX = rightX;
 		stickY = rightY;
 
+		Debug.Log("And the camera transform is......:");
+		Debug.Log(cameraTransform.position);
+
 		// PLANE for projections. 
 		// NORMAL FOR PLAYER TO TARGET
 		// normal = new Vector3(lockedTarget.position.x - playerTransform.position.x,
 		//                             0, lockedTarget.position.z - playerTransform.position.z).normalized; 
 		// NORMAL FOR CAMERA TO TARGET
 		normal = new Vector3(lockedTarget.position.x - cameraTransform.position.x,
-		                                                  0, lockedTarget.position.z - cameraTransform.position.z).normalized; 	// Gives a normal 
+		                     lockedTarget.position.y - cameraTransform.position.y, 
+		                     lockedTarget.position.z - cameraTransform.position.z).normalized; 	// Gives a normal 
 
 		Debug.DrawRay(lockedTarget.position, normal*5, Color.black, 5f);
 
@@ -159,14 +163,18 @@ public class TargetField : MonoBehaviour {
 		//Vector3 drawPoint = playerTransform.right * 2 * rightX + playerTransform.up * 2 * rightY;
 		drawPoint = cameraTransform.right * rightX + cameraTransform.up * rightY;
 		stickPoint = lockedTarget.position - drawPoint;
-		Debug.DrawLine(lockedTarget.position, stickPoint, Color.yellow, 5.0f);
+		Debug.DrawLine(lockedTarget.position, stickPoint, Color.blue, 5.0f);
 
 		// Direction vector from target to stick direction
 		stickDir = lockedTarget.position - stickPoint;
 
 		bestTarget = getBestTarget(); 
-		if (bestTarget == null) { return lockedTarget; }
-		lockedTarget = bestTarget;
+		if (bestTarget == null) 
+			return lockedTarget; 
+		else {
+			lockedTarget = bestTarget;
+			cameraScript.setLookAt(bestTarget.position);
+		}
 		return bestTarget;
 	}
 
@@ -203,7 +211,8 @@ public class TargetField : MonoBehaviour {
 			if (angle < minAngle) {
 				// Filter by closest projected point to target
 				Debug.Log("XY Distance: " +  Vector3.Magnitude(lockedTarget.position - t.position));
-				if (Vector3.Magnitude(projectedToLocked) < shortestDistance) 
+				// if (Vector3.Magnitude(projectedToLocked) < shortestDistance)
+				if (Vector3.Magnitude(potentialToLocked) < shortestDistance) 
 				{
 					bestTarget = t;
 					shortestDistance = Vector3.Magnitude(lockedTarget.position - t.position);
